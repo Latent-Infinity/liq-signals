@@ -5,7 +5,7 @@ Within the Latent Infinity Quant (LIQ) ecosystem, `liq-signals` defines the stan
 ## Installation
 
 ```bash
-pip install liq-signals
+uv pip install liq-signals
 ```
 
 ## Quick Start

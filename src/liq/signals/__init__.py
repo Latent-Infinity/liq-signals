@@ -225,6 +225,7 @@ __all__ = [
     "SignalProcessor",
     "ProcessingResult",
     "order_intent_to_request",
+    "SignalOutput",
     # Exceptions
     "SizingError",
     "InsufficientDataError",

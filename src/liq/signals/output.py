@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 import polars as pl
 
@@ -13,7 +13,7 @@ class SignalOutput:
     """Model outputs for a symbol/timeframe."""
 
     scores: pl.Series
-    labels: Optional[pl.Series] = None
+    labels: pl.Series | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
