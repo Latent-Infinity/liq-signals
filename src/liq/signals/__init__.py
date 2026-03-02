@@ -73,7 +73,10 @@ class Signal:
 
     def normalized_timestamp(self) -> datetime:
         """Return a timezone-aware UTC timestamp."""
-        if self.timestamp.tzinfo is None or self.timestamp.tzinfo.utcoffset(self.timestamp) is None:
+        if (
+            self.timestamp.tzinfo is None
+            or self.timestamp.tzinfo.utcoffset(self.timestamp) is None
+        ):
             return self.timestamp.replace(tzinfo=UTC)
         return self.timestamp.astimezone(UTC)
 
@@ -85,20 +88,16 @@ class SignalProvider(Protocol):
         self,
         data: Any | None = None,
         portfolio_state: PortfolioState | None = None,
-    ) -> Iterable[Signal]:
-        ...
+    ) -> Iterable[Signal]: ...
 
     @property
-    def required_history(self) -> int:
-        ...
+    def required_history(self) -> int: ...
 
     @property
-    def symbols(self) -> list[str]:
-        ...
+    def symbols(self) -> list[str]: ...
 
     @property
-    def name(self) -> str:
-        ...
+    def name(self) -> str: ...
 
 
 class BaseSignalProvider:
@@ -146,7 +145,9 @@ class FileSignalProvider(BaseSignalProvider):
         elif suffix in {".json", ".jsonl"}:
             yield from self._load_json()
         else:
-            raise ValueError("Unsupported signals file format; use .csv or .json/.jsonl")
+            raise ValueError(
+                "Unsupported signals file format; use .csv or .json/.jsonl"
+            )
 
     def _load_csv(self) -> Iterable[Signal]:
         with self.filepath.open("r", newline="") as f:
@@ -164,9 +165,24 @@ class FileSignalProvider(BaseSignalProvider):
                     timestamp=ts,
                     direction=direction,  # type: ignore[arg-type]
                     strength=strength,
-                    target_weight=float(target_weight) if target_weight not in (None, "") else None,
+                    target_weight=float(target_weight)
+                    if target_weight not in (None, "")
+                    else None,
                     horizon=int(horizon) if horizon not in (None, "") else None,
-                    metadata={k: v for k, v in row.items() if k not in {"symbol", "timestamp", "ts", "direction", "strength", "target_weight", "horizon"}},
+                    metadata={
+                        k: v
+                        for k, v in row.items()
+                        if k
+                        not in {
+                            "symbol",
+                            "timestamp",
+                            "ts",
+                            "direction",
+                            "strength",
+                            "target_weight",
+                            "horizon",
+                        }
+                    },
                 )
 
     def _load_json(self) -> Iterable[Signal]:
@@ -191,7 +207,20 @@ class FileSignalProvider(BaseSignalProvider):
                     strength=float(row.get("strength", 1.0)),
                     target_weight=row.get("target_weight"),
                     horizon=row.get("horizon"),
-                    metadata={k: v for k, v in row.items() if k not in {"symbol", "timestamp", "ts", "direction", "strength", "target_weight", "horizon"}},
+                    metadata={
+                        k: v
+                        for k, v in row.items()
+                        if k
+                        not in {
+                            "symbol",
+                            "timestamp",
+                            "ts",
+                            "direction",
+                            "strength",
+                            "target_weight",
+                            "horizon",
+                        }
+                    },
                 )
 
 

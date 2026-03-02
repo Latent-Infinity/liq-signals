@@ -79,10 +79,7 @@ class TestFileSignalProviderCSV:
     def test_csv_with_ts_column_alias(self, tmp_path: Path) -> None:
         """Should accept 'ts' as timestamp column alias."""
         csv_path = tmp_path / "signals.csv"
-        csv_path.write_text(
-            "symbol,ts,direction\n"
-            "BTC_USDT,2024-01-15T10:30:00Z,long\n"
-        )
+        csv_path.write_text("symbol,ts,direction\nBTC_USDT,2024-01-15T10:30:00Z,long\n")
 
         provider = FileSignalProvider(csv_path)
         signals = list(provider.generate_signals())
@@ -167,8 +164,7 @@ class TestFileSignalProviderCSV:
         """Symbol should be uppercased."""
         csv_path = tmp_path / "signals.csv"
         csv_path.write_text(
-            "symbol,timestamp,direction\n"
-            "btc_usdt,2024-01-15T10:30:00Z,long\n"
+            "symbol,timestamp,direction\nbtc_usdt,2024-01-15T10:30:00Z,long\n"
         )
 
         provider = FileSignalProvider(csv_path)

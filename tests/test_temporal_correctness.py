@@ -74,6 +74,7 @@ class TestSignalDataIntegrity:
         )
 
         from dataclasses import FrozenInstanceError
+
         with pytest.raises(FrozenInstanceError):
             sig.symbol = "ETH_USDT"  # type: ignore[misc]
 

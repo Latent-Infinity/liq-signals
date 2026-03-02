@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "liq-signals"
-version = "0.1.0"
+version = "0.1.1"
 description = "Signal data structures and provider protocol for the LIQ stack"
 readme = "README.md"
 license = "MIT"
@@ -23,7 +23,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "liq-core>=0.1.0",
+    "liq-core>=0.1.1",
     "polars>=1.20",
 ]
 

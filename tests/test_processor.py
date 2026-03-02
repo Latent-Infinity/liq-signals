@@ -120,8 +120,8 @@ class TestOrderIntentToRequest:
         assert order.metadata["model"] == "lstm"
         assert order.metadata["version"] == "1.0"
 
-    def test_strategy_id_passed(self, now: datetime) -> None:
-        """Should include strategy_id in order."""
+    def test_policy_id_passed(self, now: datetime) -> None:
+        """Should include policy_id in order."""
         intent = OrderIntent(
             symbol="BTC_USDT",
             side=OrderSide.BUY,
@@ -130,9 +130,9 @@ class TestOrderIntentToRequest:
             timestamp=now,
         )
 
-        order = order_intent_to_request(intent, strategy_id="momentum_v2")
+        order = order_intent_to_request(intent, policy_id="momentum_v2")
 
-        assert order.strategy_id == "momentum_v2"
+        assert order.policy_id == "momentum_v2"
 
     def test_confidence_passed(self, now: datetime) -> None:
         """Should include confidence in order."""
@@ -193,24 +193,26 @@ class TestSignalProcessor:
         processor = SignalProcessor(sizer=sizer)
         signal = Signal(symbol="BTC_USDT", timestamp=now, direction="flat")
 
-        order = processor.process_signal(signal, portfolio_with_long, current_price=50000)
+        order = processor.process_signal(
+            signal, portfolio_with_long, current_price=50000
+        )
 
         assert order is not None
         assert order.side == OrderSide.SELL
         assert order.quantity == Decimal("1.0")  # Full position
 
-    def test_processor_with_strategy_id(
+    def test_processor_with_policy_id(
         self, now: datetime, empty_portfolio: PortfolioState
     ) -> None:
-        """Should include strategy_id in generated orders."""
+        """Should include policy_id in generated orders."""
         sizer = FixedQuantitySizer(default_quantity="0.5")
-        processor = SignalProcessor(sizer=sizer, strategy_id="test_strategy")
+        processor = SignalProcessor(sizer=sizer, policy_id="test_strategy")
         signal = Signal(symbol="BTC_USDT", timestamp=now, direction="long")
 
         order = processor.process_signal(signal, empty_portfolio, current_price=50000)
 
         assert order is not None
-        assert order.strategy_id == "test_strategy"
+        assert order.policy_id == "test_strategy"
 
     def test_processor_with_default_confidence(
         self, now: datetime, empty_portfolio: PortfolioState

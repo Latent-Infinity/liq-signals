@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 def order_intent_to_request(
     intent: OrderIntent,
-    strategy_id: str | None = None,
+    policy_id: str | None = None,
     confidence: float | None = None,
 ) -> OrderRequest:
     """Convert an OrderIntent to a liq-core OrderRequest.
@@ -39,7 +39,7 @@ def order_intent_to_request(
 
     Args:
         intent: The OrderIntent to convert
-        strategy_id: Optional strategy identifier for the order
+        policy_id: Optional strategy identifier for the order
         confidence: Optional confidence score [0, 1]
 
     Returns:
@@ -47,7 +47,7 @@ def order_intent_to_request(
 
     Example:
         >>> intent = OrderIntent(symbol="BTC_USDT", side=OrderSide.BUY, ...)
-        >>> order = order_intent_to_request(intent, strategy_id="momentum_v1")
+        >>> order = order_intent_to_request(intent, policy_id="momentum_v1")
     """
     return OrderRequest(
         symbol=intent.symbol,
@@ -57,7 +57,7 @@ def order_intent_to_request(
         limit_price=intent.limit_price,
         stop_price=intent.stop_price,
         timestamp=intent.timestamp,
-        strategy_id=strategy_id,
+        policy_id=policy_id,
         confidence=confidence,
         metadata=intent.signal_metadata,
     )
@@ -87,7 +87,7 @@ class SignalProcessor:
 
     Attributes:
         sizer: The sizing strategy to use
-        strategy_id: Optional strategy identifier for generated orders
+        policy_id: Optional strategy identifier for generated orders
         default_confidence: Default confidence if not in signal metadata
 
     Example:
@@ -99,11 +99,11 @@ class SignalProcessor:
     def __init__(
         self,
         sizer: SignalSizer,
-        strategy_id: str | None = None,
+        policy_id: str | None = None,
         default_confidence: float | None = None,
     ) -> None:
         self.sizer = sizer
-        self.strategy_id = strategy_id
+        self.policy_id = policy_id
         self.default_confidence = default_confidence
 
     def process_signal(
@@ -150,7 +150,7 @@ class SignalProcessor:
 
         order = order_intent_to_request(
             intent,
-            strategy_id=self.strategy_id,
+            policy_id=self.policy_id,
             confidence=confidence,
         )
 

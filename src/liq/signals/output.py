@@ -22,4 +22,6 @@ class SignalOutput:
         if self.labels is not None and not isinstance(self.labels, pl.Series):
             raise TypeError("labels must be a polars Series when provided")
         if self.labels is not None and self.labels.len() != self.scores.len():
-            raise ValueError("scores and labels must have equal length when labels provided")
+            raise ValueError(
+                "scores and labels must have equal length when labels provided"
+            )

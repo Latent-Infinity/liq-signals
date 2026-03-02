@@ -99,7 +99,9 @@ class SignalSizer(Protocol):
         ...
 
 
-def direction_to_side(direction: Direction, current_position_qty: Decimal) -> OrderSide | None:
+def direction_to_side(
+    direction: Direction, current_position_qty: Decimal
+) -> OrderSide | None:
     """Convert signal direction to order side.
 
     Args:
@@ -157,7 +159,9 @@ def signal_to_order_intent(
         InsufficientDataError: If required data is missing
     """
     if signal.timestamp is None:
-        raise InvalidSignalError("Signal missing timestamp", context={"symbol": signal.symbol})
+        raise InvalidSignalError(
+            "Signal missing timestamp", context={"symbol": signal.symbol}
+        )
 
     # Get current position for this symbol
     position = portfolio_state.positions.get(signal.symbol)

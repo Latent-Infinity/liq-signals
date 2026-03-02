@@ -8,7 +8,9 @@ from liq.signals import FileSignalProvider, Signal
 
 
 def test_signal_timestamp_normalized() -> None:
-    sig = Signal(symbol="BTC_USDT", timestamp=datetime(2024, 1, 1, 0, 0), direction="long")
+    sig = Signal(
+        symbol="BTC_USDT", timestamp=datetime(2024, 1, 1, 0, 0), direction="long"
+    )
     normalized = sig.normalized_timestamp()
     assert normalized.tzinfo is not None
     assert normalized.tzinfo.utcoffset(normalized) is not None

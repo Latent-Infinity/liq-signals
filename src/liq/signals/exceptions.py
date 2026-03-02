@@ -72,11 +72,13 @@ class RiskConstraintError(SizingError):
         self.constraint_value = constraint_value
         self.computed_value = computed_value
         ctx = context or {}
-        ctx.update({
-            "constraint_name": constraint_name,
-            "constraint_value": constraint_value,
-            "computed_value": computed_value,
-        })
+        ctx.update(
+            {
+                "constraint_name": constraint_name,
+                "constraint_value": constraint_value,
+                "computed_value": computed_value,
+            }
+        )
         super().__init__(message, signal_id=signal_id, context=ctx)
 
 
