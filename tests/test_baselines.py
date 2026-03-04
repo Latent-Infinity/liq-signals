@@ -1,4 +1,4 @@
-"""Tests for baseline SignalProvider implementations (Phase 0b Task 0b.8).
+"""Tests for baseline SignalProvider implementations (Stage 0b Task 0b.8).
 
 Two baselines:
     PassiveBaseline: equal-weight buy-and-hold

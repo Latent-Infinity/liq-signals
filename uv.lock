@@ -134,7 +134,7 @@ wheels = [
 
 [[package]]
 name = "liq-core"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "../liq-core" }
 dependencies = [
     { name = "pydantic" },
@@ -153,7 +153,7 @@ requires-dist = [
 
 [[package]]
 name = "liq-signals"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "liq-core" },
